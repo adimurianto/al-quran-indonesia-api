@@ -38,3 +38,9 @@ This is an API for the Al-Quran Indonesia project.
   npm run dev -- --service=rest
 ```
 
+
+- Access Swagger API Docs
+[http://127.0.0.1:3001/api-docs](http://127.0.0.1:3001/api-docs/)
+
+<img width="100%" alt="image" src="https://github.com/user-attachments/assets/6a237930-2e4b-46b6-9ff3-5ae34e851fa1" />
+
