@@ -32,6 +32,8 @@
     "dependencies": {
         "@prisma/client": "^5.1.1",
         "@types/luxon": "^3.3.2",
+        "@types/swagger-jsdoc": "^6.0.4",
+        "@types/swagger-ui-express": "^4.1.7",
         "axios": "^1.6.5",
         "bcrypt": "^5.1.0",
         "cors": "^2.8.5",
@@ -46,6 +48,8 @@
         "nodemailer": "^6.9.3",
         "rimraf": "^5.0.1",
         "slug": "^8.2.2",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.1",
         "uuid": "^9.0.0",
         "winston": "^3.9.0"
     }
