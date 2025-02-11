@@ -3,6 +3,7 @@ import { Request, Response, Router } from "express";
 import RoutesRegistry from "./registry";
 import * as swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
+import { authMiddleware } from "$middlewares/authMiddleware";
 
 const swaggerOptions = {
   definition: {
@@ -43,7 +44,8 @@ router.get("/ping", (req: Request, res: Response) => {
 });
 
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-router.use("/auth", RoutesRegistry.AuthRoutes)
+router.use("/auth", RoutesRegistry.AuthRoutes);
+router.use("/quran", authMiddleware, RoutesRegistry.QuranRoutes);
 
 router.all("*", (req: Request, res: Response) => {
   return response_not_found(res);

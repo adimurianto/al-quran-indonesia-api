@@ -16,3 +16,20 @@ model User {
   email    String @unique
   password String
 }
+
+model Sura {
+  id       Int    @id
+  name String @db.Text
+  translation String
+  Quran Quran[]
+}
+
+model Quran {
+  id       Int    @id
+  suraId   Int
+  verseID  Int
+  ayahText String @db.Text
+  indoText String @db.Text
+  readText String @db.Text
+  sura      Sura     @relation(fields: [suraId], references: [id])
+}

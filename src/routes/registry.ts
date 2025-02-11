@@ -1,7 +1,7 @@
 import AuthRoutes from "./Auth";
+import QuranRoutes from "./Quran";
 
-const RoutesRegistry = {
-    AuthRoutes
+export default {
+    AuthRoutes,
+    QuranRoutes
 };
-
-export default RoutesRegistry;
