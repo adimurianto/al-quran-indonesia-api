@@ -53,12 +53,12 @@ const format = winston.format.combine(
 const todayDate = DateTime.now().setZone("Asia/Jakarta").toISODate()
 const folderName = `${todayDate?.split("-")[0]}-${todayDate?.split("-")[1]}`
 const fileName = todayDate
-const isVercel = process.env.VERCEL === '1'
+const isLoggerActive = process.env.LOGGER_ACTIVE === '1'
 
 const transports = [
   // Allow the use the console to print the messages
   new winston.transports.Console(),
-  ...(isVercel ? [] : [
+  ...(isLoggerActive ? [
     new winston.transports.File({
       filename: `logs/errors/${folderName}/${fileName}.log`,
       level: "error",
@@ -74,7 +74,7 @@ const transports = [
     new winston.transports.File({
       filename: `logs/combined/${folderName}/${fileName}.log`,
     })
-  ]),
+  ] : []),
 ];
 
 // Create the logger instance that has to be exported
