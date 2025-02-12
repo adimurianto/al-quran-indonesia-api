@@ -1,6 +1,5 @@
 import { DateTime } from "luxon";
 import winston from "winston";
-import fs from 'fs';
 
 // Define your severity levels.
 // With them, You can create log files,
@@ -49,63 +48,33 @@ const format = winston.format.combine(
   // winston.format.json()
 );
 
-const createLogDirIfNotExists = (path: string) => {
-  const dir = path.split('/');
-  for (let i = 1; i <= dir.length; i++) {
-    const subDir = dir.slice(0, i).join('/');
-    if (!fs.existsSync(subDir)) {
-      fs.mkdirSync(subDir, { recursive: true });
-    }
-  }
-};
-
 // Define which transports the logger must use to print out messages.
 // In this example, we are using three different transports
 const todayDate = DateTime.now().setZone("Asia/Jakarta").toISODate()
 const folderName = `${todayDate?.split("-")[0]}-${todayDate?.split("-")[1]}`
 const fileName = todayDate
+const isVercel = process.env.VERCEL === '1'
+
 const transports = [
   // Allow the use the console to print the messages
   new winston.transports.Console(),
-  // Allow to print all the error level messages inside the error.log file
-  (() => {
-    const errorDir = `logs/errors/${folderName}`;
-    createLogDirIfNotExists(errorDir);
-    return new winston.transports.File({
-      filename: `${errorDir}/${fileName}.log`,
+  ...(isVercel ? [] : [
+    new winston.transports.File({
+      filename: `logs/errors/${folderName}/${fileName}.log`,
       level: "error",
-      dirname: errorDir,
-    });
-  })(),
-  // Allow to print all the http level messages inside the http.log file
-  (() => {
-    const httpDir = `logs/http/${folderName}`;
-    createLogDirIfNotExists(httpDir);
-    return new winston.transports.File({
-      filename: `${httpDir}/${fileName}.log`,
+    }),
+    new winston.transports.File({
+      filename: `logs/http/${folderName}/${fileName}.log`,
       level: "http",
-      dirname: httpDir,
-    });
-  })(),
-  // Allow to print all the info level messages inside the info.log file
-  (() => {
-    const infoDir = `logs/info/${folderName}`;
-    createLogDirIfNotExists(infoDir);
-    return new winston.transports.File({
-      filename: `${infoDir}/${fileName}.log`,
+    }),
+    new winston.transports.File({
+      filename: `logs/info/${folderName}/${fileName}.log`,
       level: "info",
-      dirname: infoDir,
-    });
-  })(),
-  // Allow to print all combined log messages
-  (() => {
-    const combinedDir = `logs/combined/${folderName}`;
-    createLogDirIfNotExists(combinedDir);
-    return new winston.transports.File({
-      filename: `${combinedDir}/${fileName}.log`,
-      dirname: combinedDir,
-    });
-  })()
+    }),
+    new winston.transports.File({
+      filename: `logs/combined/${folderName}/${fileName}.log`,
+    })
+  ]),
 ];
 
 // Create the logger instance that has to be exported
