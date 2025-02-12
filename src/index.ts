@@ -20,6 +20,8 @@ function parseArguments(args: string[]): Record<string, string> {
 const parsedArgs = parseArguments(process.argv);
 
 if (parsedArgs["service"] == "rest") {
-  displayAsciiArt(REST_ASCII_ART)
-  app.restApp()
+  displayAsciiArt(REST_ASCII_ART);
+  app.restApp();
 }
+
+export default app;
