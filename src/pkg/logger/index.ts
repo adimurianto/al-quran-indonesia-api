@@ -53,7 +53,7 @@ const format = winston.format.combine(
 const todayDate = DateTime.now().setZone("Asia/Jakarta").toISODate()
 const folderName = `${todayDate?.split("-")[0]}-${todayDate?.split("-")[1]}`
 const fileName = todayDate
-const isLoggerActive = process.env.LOGGER_ACTIVE === '1'
+const isLoggerActive = process.env.LOGGER_ACTIVE === '0'
 
 const transports = [
   // Allow the use the console to print the messages
