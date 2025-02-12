@@ -8,7 +8,8 @@
         "start": "npm run build && prisma generate && node dist/index.js",
         "dev": "nodemon ./src/index.ts",
         "build": "rimraf ./dist && tsc && prisma generate",
-        "seed": "ts-node prisma/seeds/index.ts"
+        "seed": "ts-node prisma/seeds/index.ts",
+        "postinstall": "prisma generate"
     },
     "author": "Adi Murianto",
     "license": "MIT",
