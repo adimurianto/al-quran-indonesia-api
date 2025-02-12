@@ -50,8 +50,12 @@ const format = winston.format.combine(
 );
 
 const createLogDirIfNotExists = (path: string) => {
-  if (!fs.existsSync(path)) {
-    fs.mkdirSync(path, { recursive: true });
+  const dir = path.split('/');
+  for (let i = 1; i <= dir.length; i++) {
+    const subDir = dir.slice(0, i).join('/');
+    if (!fs.existsSync(subDir)) {
+      fs.mkdirSync(subDir, { recursive: true });
+    }
   }
 };
 
